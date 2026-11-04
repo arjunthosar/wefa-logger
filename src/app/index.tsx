@@ -9,7 +9,7 @@ export default function Home() {
     <SafeAreaProvider>
         <SafeAreaView>
             {/* TODO: Make this into a home page. */}
-            <Button title="Go to Calendar" onPress={() => router.navigate('/calendar' as Href)} />;
+            <Button title="Go to Calendar" onPress={() => router.navigate('/calendar' as Href)} />
         </SafeAreaView>
     </SafeAreaProvider>
   )

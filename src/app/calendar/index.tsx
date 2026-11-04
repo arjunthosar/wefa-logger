@@ -41,35 +41,42 @@ const gridData = [
   {title: '', id: '35'},
 ];
 
-type ItemProps = {title: string};
-const router = useRouter();
 
-function pressDay(day: number) {
-  router.navigate(`/calendar/${day}`);
-}
+type ItemProps = {title: string, width: number, onPress: () => void};
 
-const Item = ({title}: ItemProps) => (
-  <Pressable onPress={() => pressDay(parseInt(title))}>
+const Item = ({title, width, onPress}: ItemProps) => (
+  <Pressable onPress={onPress}>
     <View style={styles.item}>
-      <Text style={[styles.itemText, {width: useWindowDimensions().width / 7 - 22}]}>{title}</Text>
+      <Text style={[styles.itemText, {width: width}]}>{title}</Text>
     </View>
   </Pressable>
 );
 
-const App = () => (
-  <SafeAreaProvider>
-    <SafeAreaView style={styles.container}>
-      <Text style={[styles.title, {marginTop: useWindowDimensions().height / 12}]}>Calendar</Text>
-      <FlatList
-        data={gridData}
-        renderItem={({item}) => <Item title={item.title} />}
-        keyExtractor={item => item.id}
-        numColumns={7}
-        contentContainerStyle={{flex: 1, justifyContent: 'center'}}
-      />
-    </SafeAreaView>
-  </SafeAreaProvider>
-);
+export default function App() {
+  const router = useRouter();
+  const {width, height} = useWindowDimensions(); 
+
+  function pressDay(day: number) {
+    if (!isNaN(day)) {
+      router.navigate(`/calendar/${day}`);
+    }
+  }
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <Text style={[styles.title, {marginTop: height / 12}]}>Calendar</Text>
+        <FlatList
+          data={gridData}
+          renderItem={({item}) => <Item title={item.title} width={width / 7 - 22} onPress={() => pressDay(parseInt(item.title))}/>}
+          keyExtractor={item => item.id}
+          numColumns={7}
+          contentContainerStyle={{flex: 1, justifyContent: 'center'}}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -94,5 +101,3 @@ const styles = StyleSheet.create({
     fontSize: 48
   }
 });
-
-export default App;
