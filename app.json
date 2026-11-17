@@ -18,7 +18,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.wefalogger"
+      "package": "com.anonymous.wefalogger",
+      "permissions": ["android.permission.WAKE_LOCK"]
     },
     "web": {
       "output": "server",
